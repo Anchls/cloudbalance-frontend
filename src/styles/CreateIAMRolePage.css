@@ -1,0 +1,140 @@
+/* src/styles/CreateIAMRolePage.css */
+
+.main-content {
+  padding: 2rem;
+  background-color: #f9fafb;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #111827;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.instructions {
+  background: #ffffff;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  margin-top: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.body_text {
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.copyfield_wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.copyfield_wrapper pre.black {
+  background: #f3f4f6;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+img {
+  margin-top: 1rem;
+  border-radius: 0.5rem;
+  max-width: 100%;
+}
+
+form {
+  margin-top: 1rem;
+}
+
+.ArnRole {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.role,
+.Account,
+.name {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #374151;
+}
+
+input[type="text"] {
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+  background-color: #f9fafb;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+input[type="text"]:focus {
+  border-color: #2563eb;
+  background-color: #ffffff;
+}
+
+.form_footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.iambutton {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+.iambutton:hover {
+  background-color: #dc2626;
+}
+
+.rightbutton {
+  display: flex;
+  gap: 1rem;
+}
+
+.backbutton,
+.nextbtn {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+.backbutton:disabled,
+.nextbtn:disabled {
+  background-color: #93c5fd;
+  cursor: not-allowed;
+}
+
+.backbutton:hover:not(:disabled),
+.nextbtn:hover:not(:disabled) {
+  background-color: #1d4ed8;
+}

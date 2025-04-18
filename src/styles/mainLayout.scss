@@ -1,0 +1,75 @@
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f0f4f8; // light grey-blue background
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.layout-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+// header {
+//   padding: 1rem 2rem;
+//   text-align: center;
+//   font-size: 1.5rem;
+//   font-weight: bold;
+//   color: #003366;
+//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+// }
+
+.layout-main {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  background-color: #ffffff; // white content area
+}
+
+// .sidebar {
+//   // width: 250px;
+//   // background-color: #d3d3d3; // light grey
+//   // padding: 1rem;
+//   // color: #333;
+//   // border-right: 1px solid #ccc;
+// }
+
+// .sidebar h2 {
+//   // font-size: 1.2rem;
+//   // margin-bottom: 1rem;
+//   // color: #003366;
+// }
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+table thead {
+  background-color: #e0f0ff;
+  color: #003366;
+}
+
+table thead th {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 2px solid #ccc;
+}
+
+table tbody td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tbody tr:hover {
+  background-color: #f1f9ff;
+}

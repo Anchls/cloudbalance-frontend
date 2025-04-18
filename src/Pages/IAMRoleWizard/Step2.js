@@ -1,0 +1,126 @@
+// src/pages/IAMRoleWizard/Step2.js
+import React from "react";
+import { JSON, JSON2, JSON3, JSON4, JSON5 } from "../../config/iamRoleSteps";
+import PolicyBlock from "../../Components/PolicyBlock";
+import one from "../../assets/1.png";
+import two from "../../assets/2.png";
+import three from "../../assets/3.png";
+import CopyBox from "../../Components/CopyBox";
+import "../../styles/CreateIAMRolePage.css";
+
+const Step2 = ({ onBack, onNext }) => {
+  return (
+    <div className="min-h-screen flex flex-col bg-gray-100">
+      <main className="main-content">
+        <h1>Add Customer Managed Policies</h1>
+        <p>Create an Inline policy for the role by following these steps</p>
+
+        <section className="instructions">
+          <ol>
+            <li className="body_text">
+              Go to the <a href="hi">Create Policy</a> Page.
+            </li>
+
+            <li className="body_text">
+              Click on the<strong>JSON</strong>tab and paste the following
+              policy and click on Next:
+              <PolicyBlock policy={JSON} />
+            </li>
+
+            <li className="body_text">
+              In the <strong>Name</strong> field, enter below-mentioned policy
+              name and click on Create Policy
+              <CopyBox policy={JSON2} />
+            </li>
+
+            <li className="body_text">
+              Again, go to the <a href="hi">Create Policy</a> Page.
+            </li>
+
+            <li className="body_text">
+              Click on the<strong>JSON</strong>tab and paste the following
+              policy and click on Next:
+              <PolicyBlock policy={JSON3} />
+            </li>
+
+            <li className="body_text">
+              In the <strong>Name</strong> field, enter below-mentioned policy
+              name and click on Create Policy
+              <CopyBox policy={JSON4} />
+            </li>
+            <li className="body_text">
+              Again, go to the <a href="hi">Create Policy</a> Page.
+            </li>
+            <li className="body_text">
+              Click on the<strong>JSON</strong>tab and paste the following
+              policy and click on Next:
+              <PolicyBlock policy={JSON5} />
+            </li>
+
+            <li className="body_text">
+              In the <strong>Name</strong> field, enter below-mentioned policy
+              name and click on Create Policy
+              <CopyBox policy={JSON} />
+            </li>
+
+            <li className="body_text">
+              <div>
+                Go to the <a href="ck">CK-Tuner-Role</a>
+              </div>
+              <img src={one} alt="user-management"></img>
+            </li>
+
+            <li className="body_text">
+              In Permission policies, click on{" "}
+              <strong>Add permissions Attach Policy</strong>
+              <img src={two} alt="user-management"></img>
+            </li>
+            <li className="body_text">
+              Filter by Type {">"} Customer managed then search for{" "}
+              <strong>
+                cktuner-CostAuditPolicy, cktuner-SecAuditPolicy,
+                cktuner-TunerReadEssentials , cktuner-SchedulerPolicy
+              </strong>{" "}
+              and select them. <img src={three} alt="user-managemnet"></img>
+            </li>
+            <li className="body_text">
+              Now, click on <strong>Add permissions</strong>
+            </li>
+            <li className="body_text">
+              In Permission policies, click on{" "}
+              <strong>Add permissions {">"} Create inline policy</strong>
+              <img src={two} alt="user-management"></img>
+            </li>
+            <li className="body_text">
+              <span className="steps_wrapper">
+                <span className="steps">11</span>
+              </span>
+              Click on the<strong>JSON</strong>tab and paste the following
+              policy and click on Next:
+              <PolicyBlock policy={JSON5} />
+            </li>
+            <li className="body_text">
+              Now, click one <strong>Review policy</strong>
+            </li>
+            <li>
+              In the <strong>Name</strong> field, enter the below-mentioned
+              policy name and click on <strong>Create Policy </strong>
+            </li>
+          </ol>
+
+          <div className="form_footer">
+            <button className="iambutton" type="button" onClick={onBack}>
+              Back
+            </button>
+            <div className="rightbutton">
+              <button className="nextbtn" type="button" onClick={onNext}>
+                Next - Add Inline Policy
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+};
+export default Step2;

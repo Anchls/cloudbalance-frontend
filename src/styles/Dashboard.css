@@ -1,0 +1,115 @@
+.main-content {
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  margin: 1rem;
+}
+
+.user-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.user-header h1 {
+  font-size: 1.8rem;
+  color: #003366;
+}
+
+.add-user {
+  background-color: #007acc;
+  color: white;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-user:hover {
+  background-color: #005fa3;
+}
+
+.error-text {
+  color: red;
+  margin-bottom: 1rem;
+}
+
+.user-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #f9fcff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.04);
+}
+
+.user-table th {
+  background-color: #e0f0ff;
+  color: #003366;
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 2px solid #cbd5e1;
+}
+
+.user-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  color: #333;
+}
+
+.user-table tr:nth-child(even) {
+  background-color: #f2f8fc;
+}
+
+.user-table tr:hover {
+  background-color: #e6f2ff;
+}
+
+.update-button {
+  background-color: #0096c7;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.update-button:hover {
+  background-color: #0077a6;
+}
+
+/* Pagination */
+.pagination-controls {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.pagination-button {
+  background-color: #007acc;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  font-size: 1rem;
+  color: #003366;
+}

@@ -1,0 +1,35 @@
+
+.update-user-container {
+  width: 400px;
+  margin: auto;
+  padding: 24px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.1);
+}
+
+.update-user-container h2 {
+  margin-bottom: 16px;
+}
+
+.update-user-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.update-user-container input,
+.update-user-container select {
+  padding: 8px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.update-user-container button {
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
