@@ -14,7 +14,6 @@ const CopyBox = ({ text = "CK-Tuner-Role-dev2" }) => {
   return (
     <div className="copy-box-container" onClick={handleCopy}>
       <div className="copy-box">
-        {/* Custom SVG copy icon */}
         <div className="copy-icon">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -23,10 +22,9 @@ const CopyBox = ({ text = "CK-Tuner-Role-dev2" }) => {
             fill="white"
             viewBox="0 0 24 24"
           >
-            <path d="M19 21H9c-1.1 0-2-.9-2-2V7h2v12h10v2zM16 1H5c-1.1 0-2 .9-2 2v14h2V3h11V1z" />
+              <path d="M19 21H9c-1.1 0-2-.9-2-2V7h2v12h10v2zM16 1H5c-1.1 0-2 .9-2 2v14h2V3h11V1z" />
           </svg>
         </div>
-
         <span className="copy-text">{text}</span>
       </div>
       <small className="copy-instruction">

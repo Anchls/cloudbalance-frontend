@@ -6,8 +6,8 @@ import { login } from "../services/authService";
 import logo from '../assets/imh.png'; // Adjust the path to your logo
 import { loginSuccess } from "../redux/Action";
 import { useDispatch } from "react-redux";
-import 'react-toastify/dist/ReactToastify.css';
-import "./Login.css"; 
+// import 'react-toastify/dist/ReactToastify.css';
+import '../Pages/Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState("");

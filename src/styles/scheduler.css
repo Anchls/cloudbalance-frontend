@@ -1,0 +1,46 @@
+/* General Scheduler container */
+.scheduler-main {
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Tabs container with gap */
+.tabs-container {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+/* Tab button styling */
+.tab-button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  background-color: #f4f6fa; /* Light background color */
+  border: 1px solid #d1d5db; /* Lighter border */
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  min-width: 100px; /* Ensuring consistent width */
+  text-align: center;
+  border: none;
+}
+
+/* Button hover effect */
+.tab-button:hover {
+  background-color: #e2e8f0; /* Light grey on hover */
+  border-color: #a0aec0; /* Darker border on hover */
+}
+
+/* Active tab styling */
+.tab-button.active {
+    background-color: #003366;
+    color: white;
+  border-color: #3182ce; /* Blue border */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+/* Optional: Darker blue on hover for active tab */
+.tab-button.active:hover {
+  background-color: #2b6cb0; /* Darker blue on hover for active tab */
+}

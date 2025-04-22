@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import LogoutIcon from '@mui/icons-material/Logout';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import one from '../assets/imh.png';
@@ -59,9 +60,10 @@ const dispatch= useDispatch();
             {userName ? userName.charAt(0).toUpperCase() : 'U'}
           </div>
           <button
-            className="logout-button bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+            className="logout"
             onClick={handleLogout}
           >
+            <LogoutIcon />
             Logout
           </button>
         </div>

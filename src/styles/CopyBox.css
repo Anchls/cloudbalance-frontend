@@ -1,38 +1,39 @@
 .copy-box-container {
-    border: 1px solid #1e40af;
-    border-radius: 6px;
-    padding: 10px;
-    background-color: #f8fafc;
-    cursor: pointer;
-    width: fit-content;
-    transition: all 0.2s ease;
-  }
-  
-  .copy-box-container:hover {
-    background-color: #eff6ff;
-    box-shadow: 0 0 0 2px #1e3a8a33;
-  }
-  
-  .copy-box {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 600;
-    color: #1e293b;
-  }
-  
-  .copy-icon {
-    background-color: #1e3a8a;
-    padding: 6px;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .copy-instruction {
-    font-size: 12px;
-    color: #475569;
-    margin-top: 4px;
-  }
-  
+  border: 1px solid #6c6c6e;
+  border-radius: 6px;
+  padding: 6px;
+  background-color: #f8fafc;
+  cursor: pointer;
+  width: fit-content;
+  transition: all 0.2s ease;
+  margin-left: 40px; 
+}
+
+.copy-box-container:hover {
+  background-color: #eff6ff;
+  box-shadow: 0 0 0 2px #63636333;
+}
+
+.copy-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.copy-icon {
+  background-color: #6d7486;
+  padding: 6px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copy-instruction {
+  font-size: 12px;
+  color: #475569;
+  /* margin-top: 7px; */
+  /* margin-left: px; also aligned with the copy box */
+}

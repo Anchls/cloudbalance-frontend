@@ -1,6 +1,6 @@
 // src/pages/IAMRoleWizard/Step2.js
 import React from "react";
-import { JSON, JSON2, JSON3, JSON4, JSON5 } from "../../config/iamRoleSteps";
+import { JSON, JSON2, JSON3, JSON4, JSON5 } from "../../Pages/IAMRoleWizard/config/iamRoleSteps";
 import PolicyBlock from "../../Components/PolicyBlock";
 import one from "../../assets/1.png";
 import two from "../../assets/2.png";
@@ -11,10 +11,10 @@ import "../../styles/CreateIAMRolePage.css";
 const Step2 = ({ onBack, onNext }) => {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
-      <main className="main-content">
-        <h1>Add Customer Managed Policies</h1>
+      <h1>Add Customer Managed Policies</h1>
         <p>Create an Inline policy for the role by following these steps</p>
-
+ <main className="main-content">
+      
         <section className="instructions">
           <ol>
             <li className="body_text">

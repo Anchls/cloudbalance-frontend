@@ -1,5 +1,4 @@
-/* src/styles/CreateIAMRolePage.css */
-
+/* === Global Styles === */
 .main-content {
   padding: 2rem;
   background-color: #f9fafb;
@@ -13,11 +12,31 @@ h1 {
   margin-bottom: 0.5rem;
 }
 
+p {
+  font-size: 1rem;
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+.submitbutton{
+
+  background-color: #ef4444;
+  margin:25px;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+gap:30px;
+  
+}
+/* === Instructions Section === */
 .instructions {
   background: #ffffff;
   border-radius: 0.5rem;
-  padding: 2rem;
-  margin-top: 1.5rem;
+  /* padding: 2rem; */
+  /* margin-top: 1.5rem; */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
@@ -47,8 +66,38 @@ img {
   margin-top: 1rem;
   border-radius: 0.5rem;
   max-width: 100%;
+  height: auto;
 }
 
+/* === Step Number Styles (for Steps in Instructions) === */
+.step3-label {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.step3-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #c4c4c4;
+  color: #3b3b3b;
+  font-weight: 600;
+  font-size: 0.75rem;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.step3-text {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+  flex: 1;
+}
+
+/* === Form and Input Styles === */
 form {
   margin-top: 1rem;
 }
@@ -89,15 +138,18 @@ input[type="text"]:focus {
   background-color: #ffffff;
 }
 
+/* === Footer and Button Styles === */
 .form_footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 2rem;
+  flex-wrap: wrap;
 }
 
 .iambutton {
   background-color: #ef4444;
+  margin:25px;
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -121,6 +173,7 @@ input[type="text"]:focus {
   background-color: #2563eb;
   color: white;
   border: none;
+  margin: 25px;
   padding: 0.75rem 1.5rem;
   border-radius: 0.375rem;
   cursor: pointer;
@@ -137,4 +190,29 @@ input[type="text"]:focus {
 .backbutton:hover:not(:disabled),
 .nextbtn:hover:not(:disabled) {
   background-color: #1d4ed8;
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+  .instructions {
+    padding: 1.5rem;
+  }
+
+  .step3-label {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .step3-number {
+    margin-bottom: 1rem;
+  }
+
+  .form_footer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .rightbutton {
+    flex-direction: column;
+  }
 }

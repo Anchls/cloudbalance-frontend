@@ -7,12 +7,18 @@ import "../styles/mainLayout.scss";
 const MainLayout = () => {
   return (
     <div className="layout-container">
+      <header>
       <Header />
+      </header>
       <div className="layout-body">
+        <div className="sidebar">
         <Sidebar />
-        <main className="layout-main">
+        </div>
+        <div className="layout-main">
+        <main>
           <Outlet />
         </main>
+        </div>
       </div>
     </div>
   );

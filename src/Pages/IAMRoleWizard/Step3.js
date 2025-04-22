@@ -5,7 +5,7 @@ import six from '../../assets/7.png';
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import ThankYou from "./ThankYou"; // create this component
+import ThankYou from "../../Pages/IAMRoleWizard/ThankYou"; // create this component
 import "../../styles/CreateIAMRolePage.css";
 import { useSelector } from "react-redux";
 
@@ -15,28 +15,38 @@ const Step3 = ({ data, onBack }) => {
   const navigate = useNavigate();
   const {token} = useSelector(state => state);
 
-  const handleSubmit = async () => {
-    try {
-      await axios.post("http://localhost:8080/api/account/onboarding", data,{
-        headers:{
-          Authorization:`Bearer ${token}`
-        }
-      }); // Your backend API
-      setSubmitted(true);
-      navigate('/thank-you');
-    } catch (error) {
-      console.error("Submission failed:", error);
-    }
-  };
+    const handleSubmit = async () => {
+      try {
+        console.log("Submitting data:",{ data});
+        const res = await axios.post("http://localhost:8080/api/account/onboarding", data, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+        console.log("Submission success:", res.data);
+        setSubmitted(true);
+        navigate("/onboarding/thank-you");
+      } catch (error) {
+        console.error("Submission failed:", error.response?.data || error.message);
+        alert("Submission failed. Check console for error.");
+      }
+    };
 
   if (submitted) return <ThankYou />;
 
   return (
-    <div className="instructions">
-      <h1>Create Cost & Usage Report</h1>
+    <div className="min-h-screen flex flex-col bg-gray-100">
+    <h1>Create Cost & Usage Report</h1>
       <p>Create Cost & Usage Report following these steps</p>
+<main className="main-content">
+  
+    {/* <div className="instructions">
+      <h1>Create Cost & Usage Report</h1>
+      <p>Create Cost & Usage Report following these steps</p> */}
 
-      <ol>
+<section className="instructions">
+<ol>
         <li className="body_text">
           <div className="steps_wrapper">
         
@@ -91,7 +101,9 @@ const Step3 = ({ data, onBack }) => {
           <button className="backbutton" onClick={onBack}>Back - Attach IAM Policy</button>
           <button className="submitbutton" onClick={handleSubmit}>Submit</button>
           </div>
-      </div>
+          </div>
+        </section>
+      </main>
     </div>
   );
 };

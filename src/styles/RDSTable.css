@@ -1,0 +1,34 @@
+.rds-table-container {
+  /* margin: 20px; */
+  font-family: Arial, sans-serif;
+}
+
+.rds-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.rds-table thead {
+  background-color: #003366;
+  color: white;
+}
+
+.rds-table th,
+.rds-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.rds-table th input {
+  width: 100%;
+  padding: 4px;
+  border: none;
+  outline: none;
+  background-color: #003366;
+  color: white;
+}
+
+.rds-table tbody tr:hover {
+  background-color: #f2f2f2;
+}

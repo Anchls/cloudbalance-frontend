@@ -654,3 +654,8 @@ export const JSON5=`{
   ]
 }`;
 
+export const TEXTS = {
+  clickJson: " Click on the<strong>JSON</strong>tab and paste the following policy and click on Next:",
+  enterName: "In the <strong>Name</strong> field, enter below-mentioned policy name and click on Create Policy",
+  
+}

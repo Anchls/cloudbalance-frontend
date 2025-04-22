@@ -1,40 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import '../../styles/AccountManager.css';
-
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 const AccountManager = ({ selectedAccounts, setSelectedAccounts }) => {
-  const [orphanAccounts, setOrphanAccounts] = useState([]);
+  const [Accounts, setAccounts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedToMove, setSelectedToMove] = useState([]);
-
+  const token = useSelector((state) => state.token);
   useEffect(() => {
-    const fetchOrphanAccounts = async () => {
+    const fetchAccounts = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/accounts/orphan');
-        if (!response.ok) {
-          throw new Error('Failed to fetch orphan accounts');
-        }
-        const data = await response.json();
-        setOrphanAccounts(data);
+        const response = await axios.get('http://localhost:8080/api/account/all', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        setAccounts(response.data); 
       } catch (error) {
-        console.error("Failed to fetch orphan accounts", error);
-
-        // Dummy fallback
-        const dummyData = [
-          { id: '989033863264', name: 'Roni Thomas' },
-          { id: '767369465358', name: 'Aircel Money' },
-          { id: '237795921511', name: 'Doodhwala' },
-          { id: '315756860246', name: 'AI Gym' },
-          { id: '861931862932', name: 'Tejprakash Sharma' },
-          { id: '429796869693', name: 'Apoyo' },
-          { id: '003429390769', name: 'IDFC' },
-          { id: '112512014927', name: 'Galadari' },
-        ];
-        setOrphanAccounts(dummyData);
+        console.error("Error fetching accounts", error);
       }
     };
 
-    fetchOrphanAccounts();
-  }, []);
+    fetchAccounts();
+  }, [token]);
 
   const handleCheckboxChange = (accountId) => {
     setSelectedToMove((prev) =>
@@ -43,27 +31,27 @@ const AccountManager = ({ selectedAccounts, setSelectedAccounts }) => {
   };
 
   const handleMoveToSelected = () => {
-    const toAdd = orphanAccounts.filter((acc) => selectedToMove.includes(acc.id));
+    const toAdd = Accounts.filter((acc) => selectedToMove.includes(acc.id));
     setSelectedAccounts([...selectedAccounts, ...toAdd]);
-    setOrphanAccounts(orphanAccounts.filter((acc) => !selectedToMove.includes(acc.id)));
+    setAccounts(Accounts.filter((acc) => !selectedToMove.includes(acc.id)));
     setSelectedToMove([]);
   };
 
   const handleMoveBack = (accountId) => {
     const toMoveBack = selectedAccounts.find((acc) => acc.id === accountId);
-    setOrphanAccounts([...orphanAccounts, toMoveBack]);
+    setAccounts([...Accounts, toMoveBack]);
     setSelectedAccounts(selectedAccounts.filter((acc) => acc.id !== accountId));
   };
 
-  const filteredOrphanAccounts = orphanAccounts.filter((acc) =>
-    acc.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredOrphanAccounts = Accounts.filter((acc) =>
+    acc.accountName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
     <div className="account-manager-container">
       <div className="account-box">
         <h4>Choose Account IDs to Associate</h4>
-        <p className="count">{orphanAccounts.length} Available</p>
+        <p className="count">{Accounts.length} Available</p>
         <input
           type="text"
           placeholder="Search accounts..."
@@ -79,14 +67,19 @@ const AccountManager = ({ selectedAccounts, setSelectedAccounts }) => {
                 checked={selectedToMove.includes(acc.id)}
                 onChange={() => handleCheckboxChange(acc.id)}
               />
-              <span>{acc.name} ({acc.id})</span>
+              <div>
+                <span>{acc.accountName} ({acc.accountId})</span>
+                <div className="arn">{acc.arn}</div>
+              </div>
             </div>
           ))}
         </div>
       </div>
 
       <div className="arrow-buttons">
-        <button onClick={handleMoveToSelected}>&rarr;</button>
+        <button onClick={handleMoveToSelected} disabled={selectedToMove.length === 0}>
+          &rarr;
+        </button>
       </div>
 
       <div className="account-box">
@@ -101,8 +94,13 @@ const AccountManager = ({ selectedAccounts, setSelectedAccounts }) => {
           <div className="account-list">
             {selectedAccounts.map((acc) => (
               <div key={acc.id} className="account-item">
-                <span>{acc.name} ({acc.id})</span>
-                <button onClick={() => handleMoveBack(acc.id)} className="remove-btn">&larr;</button>
+                <div>
+                  <span>{acc.accountName} ({acc.accountId})</span>
+                  <div className="arn">{acc.arn}</div>
+                </div>
+                <button onClick={() => handleMoveBack(acc.id)} className="remove-btn">
+                  &larr;
+                </button>
               </div>
             ))}
           </div>

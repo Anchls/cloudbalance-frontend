@@ -1,8 +1,8 @@
 // src/pages/IAMRoleWizard/Step1.js
-import { IAM_POLICY } from "../../config/iamRoleSteps";
+import { IAM_POLICY, iamRoleSteps } from "./config/iamRoleSteps";
 import PolicyBlock from "../../Components/PolicyBlock";
-import one from "../../assets/1.png";
 import CopyBox from "../../Components/CopyBox";
+import one from "../../assets/1.png";
 import "../../styles/CreateIAMRolePage.css";
 
 const Step1 = ({ data, onChange, onNext }) => {
@@ -13,64 +13,32 @@ const Step1 = ({ data, onChange, onNext }) => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
-      <main className="main-content">
-        <h1>Create an IAM Role</h1>
-        <p>Create an IAM Role by following these steps</p>
+      <h1>Create an IAM Role</h1>
+      <p>Create an IAM Role by following these steps</p>
 
+      <main className="main-content">
         <section className="instructions">
           <ol>
-            <li className="body_text">
-              <div>
-            
-                Log into AWS account &nbsp;
-                <a href="https://console.aws.amazon.com/iam/">
-                  Create an IAM Role.
-                </a>
-              </div>
-            </li>
+            {iamRoleSteps.map((step) => (
+              <li className="body_text" key={step.number}>
+                <div>{step.text}</div>
+
+                {step.showTextarea && <PolicyBlock policy={IAM_POLICY}/>}
+                {step.showInput && (
+                  <div className="copyfield_wrapper">
+                    <CopyBox />
+                  </div>
+                )}
+              </li>
+            ))}
 
             <li className="body_text">
-              <div>
-             
-                In the <i>Trusted entity type</i> section, select{" "}
-                <strong>Custom trust policy</strong>. Replace with the policy
-                below:
-              </div>
-              <PolicyBlock policy={IAM_POLICY} />
-            </li>
-
-            <li className="body_text">
-              <div>
-              
-                Click on <strong>Next</strong> to go to the{" "}
-                <i>Add permissions</i> page. No permissions required now.
-              </div>
-            </li>
-
-            <li className="body_text">
-              <div>
-              
-                In the <i>Role name</i> field, enter the name below and click{" "}
-                <strong>Create Role</strong>:
-              </div>
-              <div className="copyfield_wrapper">
-                <CopyBox />
-              </div>
-            </li>
-
-            <li className="body_text">
-              <div>
-               
-                Go to the newly created IAM Role and copy the Role ARN.
-              </div>
+              <div>Go to the newly created IAM Role and copy the Role ARN.</div>
               <img src={one} alt="user-management" />
             </li>
 
             <li className="body_text">
-              <div>
-             
-                Paste the copied Role ARN below:
-              </div>
+              <div>Paste the copied Role ARN below:</div>
               <form>
                 <div className="ArnRole">
                   <div className="role">

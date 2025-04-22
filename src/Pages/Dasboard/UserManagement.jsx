@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-// import Sidebar from '../../Components/Sidebar';
 import '../../styles/Dashboard.css';
+import update from '../../assets/update.png';
+
 const UserManagement = ({ role }) => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
@@ -12,7 +12,7 @@ const UserManagement = ({ role }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
   const state = useSelector(state => state);
-  console.log(state);
+  // console.log(state);
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -50,10 +50,10 @@ const UserManagement = ({ role }) => {
   return (
     <div>
   
-
-      <main className="main-content">
+  <h1>Users</h1>
+      <main className="mainn-content">
+        
         <div className="user-header">
-          <h1>Users</h1>
           <button className="add-user" onClick={() => navigate('/dashboard/add-user')}>
             + Add User
           </button>
@@ -87,9 +87,10 @@ const UserManagement = ({ role }) => {
                     <td>
                       <button
                         className="update-button"
-                        onClick={() => navigate(`/update-user/${user.id}`)}
+                        onClick={() => navigate(`/dashboard/update-user/${user.id}`)}
                       >
-                        Update
+                        <img src= {update} alt='update'/>
+                    
                       </button>
                     </td>
                   </tr>

@@ -1,87 +1,142 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import '../../styles/updateUser.css';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import AccountManager from './AccountManager';
+import '../../styles/adduser.css';
 
-const UpdateUser = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-
-  const [userData, setUserData] = useState({
+const UpdateUserForm = ({ onUpdateSuccess }) => {
+  const {userId} = useParams();
+  const token = useSelector(state => state.token);
+  const [formData, setFormData] = useState({
     username: '',
-    email: '',
     role: ''
   });
 
-  const role = localStorage.getItem("role"); 
+  const [selectedAccounts, setSelectedAccounts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [success, setSuccess] = useState('');
+  const [error, setError] = useState('');
 
+  // Fetch user details on mount
   useEffect(() => {
-    if (role !== "ADMIN") {
-      alert("Access Denied: Only Admin can access this page.");
-      navigate("/login"); // or redirect to dashboard
-    } else {
-      fetchUser();
-    }
-  },[]);
+    const fetchUserDetails = async () => {
+      try {
+        console.log(userId);
+        const response = await axios.get(`http://localhost:8080/api/users/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        console.log(response);
+        const { username, role, assignedAccounts
+        } = response.data;
 
-  const fetchUser = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get(`http://localhost:8080/api/users/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      setUserData(response.data);
-    } catch (err) {
-      console.error('Failed to fetch user data', err);
+        setFormData({ username, role });
+        setSelectedAccounts(assignedAccounts
+          || []);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching user details:', err);
+        setError('update user');
+        setLoading(false);
+      }
+    };
+
+    if (token && userId) {
+      fetchUserDetails();
     }
-  };
+  }, [token, userId]);
 
   const handleChange = (e) => {
-    setUserData({
-      ...userData,
-      [e.target.name]: e.target.value
-    });
-  };
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:8080/api/users/${id}`, userData, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      alert('User updated successfully!');
-      navigate('/user-management');
-    } catch (err) {
-      console.error('Update failed:', err);
-      alert('Failed to update user');
+    // Clear accounts if role is changed
+    if (e.target.name === 'role' && e.target.value !== 'CUSTOMER') {
+      setSelectedAccounts([]);
     }
   };
 
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    setError('');
+    setSuccess('');
+
+    const payload = {
+      username: formData.username,
+      role: formData.role,
+      assignAccountIds: formData.role === 'CUSTOMER' ? selectedAccounts.map(acc => acc.accountId) : []
+    };
+
+    try {
+      await axios.put(`http://localhost:8080/api/users/${userId}`, payload, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      setSuccess('User updated successfully!');
+      if (onUpdateSuccess) onUpdateSuccess();
+    } catch (err) {
+      console.error('Update failed:', err);
+      setError('failed to update use.');
+    }
+  };
+
+  if (loading) return <p>Loading...</p>;
+
   return (
-    <div className="update-user-container">
-      <h2>Update User</h2>
-      <form onSubmit={handleSubmit}>
-        <label>User ID:</label>
-        <input name="id" value={userData.id || ''} onChange={handleChange} readOnly />
+    <div>
+      <main className="main-content">
+        <div className="add-user-container">
+          <h2>Update User</h2>
+          <form onSubmit={handleUpdate} className="add-user-form">
+            <div className="form-row">
+              <div className="form-group">
+                <label>User Name *</label>
+                <input
+                  type="text"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
 
-        <label>Username:</label>
-        <input name="username" value={userData.username} onChange={handleChange} required />
+            <div className="form-group">
+              <label>Select Role *</label>
+              <select
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select Role</option>
+                <option value="ADMIN">Admin</option>
+                <option value="CUSTOMER">Customer</option>
+                <option value="READ_ONLY">Read Only</option>
+              </select>
+            </div>
 
-        <label>Email:</label>
-        <input name="email" type="email" value={userData.email} onChange={handleChange} required />
+            {formData.role === 'CUSTOMER' && (
+              <AccountManager
+                selectedAccounts={selectedAccounts}
+                setSelectedAccounts={setSelectedAccounts}
+              />
+            )}
 
-        <label>Role:</label>
-        <select name="role" value={userData.role} onChange={handleChange} required>
-          <option value="ADMIN">ADMIN</option>
-          <option value="CUSTOMER">CUSTOMER</option>
-          <option value="READ_ONLY">READ_ONLY</option>
-        </select>
+            <div className="form-actions">
+              <button type="submit">Update User</button>
+            </div>
+          </form>
 
-        <button type="submit">Update</button>
-      </form>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+          {success && <p style={{ color: 'green' }}>{success}</p>}
+        </div>
+      </main>
     </div>
   );
 };
 
-export default UpdateUser;
+export default UpdateUserForm;

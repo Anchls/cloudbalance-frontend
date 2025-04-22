@@ -1,66 +1,74 @@
-import { useState,useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './Pages/Login';
-import Step3 from './Pages/IAMRoleWizard/Step3';
-import Step2 from './Pages/IAMRoleWizard/Step2';
+import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Step1 from './Pages/IAMRoleWizard/Step1';
-import OnboardingLayout from './Pages/IAMRoleWizard/OnboardingLayout';
-import { ToastContainer } from 'react-toastify';
-import AddUserForm from './Pages/CreateUser/AddUserForm';
+import Step2 from './Pages/IAMRoleWizard/Step2';
+import Step3 from './Pages/IAMRoleWizard/Step3';
 import ThankYou from './Pages/IAMRoleWizard/ThankYou';
-import AwsService from './Pages/Dasboard/AwsService';
-import IAMRoleWizard from './Pages/IAMRoleWizard/IAMRolewizard';
+import OnboardingLayout from './Pages/IAMRoleWizard/OnboardingLayout';
 import DashboardLayout from './layout/DashboardLayout';
-import { Navigate } from 'react-router-dom';
+import AddUserForm from './Pages/CreateUser/AddUserForm';
+import UpdateUserForm from './Pages/CreateUser/UpdateUser';
 import UserManagement from './Pages/Dasboard/UserManagement';
+import AwsService from '../src/AwsComponents/AwsService';
+import IAMRoleWizard from './Pages/IAMRoleWizard/IAMRolewizard';
+import { ToastContainer } from 'react-toastify';
+import Login from './Pages/Login';
+import { useSelector } from 'react-redux';
+import UsernameComponent from './Components/UsernameComponent';
+import CostExplorer from './Pages/Dasboard/CostExplorer';
+import RDSTable from './AwsComponents/RDSTable';
+import EC2Tab from './AwsComponents/EC2Tabs';
+import ASGTable from './AwsComponents/ASGTable';
+
+
+// ✅ Add this above the App function
+const PrivateRoute = ({ children }) => {
+  const role = localStorage.getItem("role");
+  return role ? children : <Navigate to="/login" />;
+};
+
 
 function App() {
-  const [role,setRole] = useState("");
-    console.log(role);
-    useEffect(()=>{
-      const assignedRole = localStorage.getItem("role");
-      console.log(assignedRole)
-      setRole(assignedRole);
-    },[]);
+  const role = useSelector(state => state.role);
+
+  // useEffect(() => {
+  //   const assignedRole = localStorage.getItem("role");
+  //   setRole(assignedRole);
+  // }, []);
+
   return (
     <Router>
-
       <Routes>
         <Route path="/" element={<Login />} />
-        {/* <Route path="/dashboard" element={<Dashboard />} /> */}
         <Route path="/login" element={<Login />} />
 
-        <Route path="/dashboard" element={ <DashboardLayout />} >
-        
-            <Route index element={role === "CUSTOMER" ? <Navigate to="cost-explorer" />: <Navigate to="users" />} />
-            <Route path='users' element={<UserManagement/>} />
-            {/* <Route path='dashboard' element={<Dashboard/>}/> */}
-            <Route path='cost-explorer' element={<>Cost explorer</>} />
-            <Route path="onboarding" element={<IAMRoleWizard/>} />
-            <Route path="add-user" element={<AddUserForm />} /> 
-            <Route path="aws-services" element={<AwsService />} />
-           
+        <Route path="/dashboard" element={<PrivateRoute><DashboardLayout /></PrivateRoute>} >
+          <Route index element={role === "CUSTOMER" ? <Navigate to="cost-explorer" /> : <Navigate to="users" />} />
+          <Route path="users" element={<UserManagement />} />
+          {/* <Route path="cost-explorer" element={<>Cost Explorer</>} /> */}
+          
+          <Route path="aws-services" element={<AwsService />} />
+          <Route path="onboarding" element={<IAMRoleWizard />} />
+          <Route path="add-user" element={<AddUserForm />} />
+          <Route path="cost-explorer" element={<CostExplorer/>} />          <Route path="update-user/:userId" element={<UpdateUserForm />} />
         </Route>
-        <Route path="/thank-you" element={<ThankYou />} />
 
-<Route path="/onboarding" element={<OnboardingLayout />}>
-  <Route path="step1" element={<Step1 />} />
-  <Route path="step2" element={<Step2 />} />
-  <Route path="step3" element={<Step3 />} />
+<Route path="/Aws" element={<AwsService/>}>
+<Route path="rds" element={<RDSTable />} />
+<Route path="ec2" element={<EC2Tab />} />
+<Route path="asg" element={<ASGTable/>} />
+
+
 </Route>
-          {/* <Route path='/update-user' element={<AddUserForm />} />  */}
-         {/* <Route path ='/onboarding' element={<DashboardPage/>}/> */}
-        {/* <Route path="/user-management" element={<Dashboard />} />  */}
-         {/* <Route path="/onboarding" element={<Dashboard />} />  */}
-        {/* <Route path="/cost-explorer" element={<CostExplorer />} /> 
-        <Route path="/aws-services" element={<AwsService />} />  */}
-       {/* <Route path="/add-user" element={<AddUserForm />} />  */}
-        {/* <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/readonly/dashboard" element={<ReadOnlyDashboard />} />
-        <Route path="/customer/dashboard" element={<CustomerDashboard />} /> */}
-        
+        <Route path="/onboarding" element={<OnboardingLayout />}>
+          <Route path="step1" element={<Step1 />} />
+          <Route path="step2" element={<Step2 />} />
+          <Route path="step3" element={<Step3 />} />
+          <Route path="thank-you" element={<ThankYou />} />
+          </Route>
       </Routes>
-      <ToastContainer  position="top-right" autoClose={5000} />
+
+      <ToastContainer position="top-right" autoClose={5000} />
     </Router>
   );
 }
