@@ -1,6 +1,6 @@
 // src/components/CopyBox.jsx
 import React, { useState } from 'react';
-import '../styles/CopyBox.css';
+import '../../styles/CopyBox.css';
 
 const CopyBox = ({ text = "CK-Tuner-Role-dev2" }) => {
   const [copied, setCopied] = useState(false);

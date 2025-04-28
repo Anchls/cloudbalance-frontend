@@ -1,0 +1,14 @@
+/* Footer CSS */
+.footer {
+    background-color: #f3f4f6; /* Light gray background */
+    color: #4b5563; /* Darker text color */
+    text-align: center;
+    padding: 1rem 0; /* Vertical padding */
+}
+  
+  .footer p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  

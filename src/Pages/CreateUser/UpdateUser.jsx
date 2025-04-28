@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import AccountManager from './AccountManager';
+import CustomButton from '../../Components/common/CustomButton';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../../styles/adduser.css';
 
 const UpdateUserForm = ({ onUpdateSuccess }) => {
-  const {userId} = useParams();
+  const { userId } = useParams();
   const token = useSelector(state => state.token);
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     username: '',
     role: ''
@@ -15,30 +20,29 @@ const UpdateUserForm = ({ onUpdateSuccess }) => {
 
   const [selectedAccounts, setSelectedAccounts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [success, setSuccess] = useState('');
-  const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false); // for button disable
+  const [errors, setErrors] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false); // To track form submission
 
-  // Fetch user details on mount
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        console.log(userId);
         const response = await axios.get(`http://localhost:8080/api/users/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
         });
-        console.log(response);
-        const { username, role, assignedAccounts
-        } = response.data;
+
+        const { username, role, assignedAccounts } = response.data;
 
         setFormData({ username, role });
-        setSelectedAccounts(assignedAccounts
-          || []);
+        setSelectedAccounts(assignedAccounts || []);
         setLoading(false);
       } catch (err) {
         console.error('Error fetching user details:', err);
-        setError('update user');
+        toast.error('Failed to fetch user details.', {
+          autoClose: 2000, // Show for 2 seconds
+        });
         setLoading(false);
       }
     };
@@ -49,18 +53,31 @@ const UpdateUserForm = ({ onUpdateSuccess }) => {
   }, [token, userId]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
 
-    // Clear accounts if role is changed
-    if (e.target.name === 'role' && e.target.value !== 'CUSTOMER') {
-      setSelectedAccounts([]);
-    }
+    setFormData(prev => ({ ...prev, [name]: value }));
+
+    // Clear the error for the specific field
+    setErrors(prev => ({ ...prev, [name]: '' }));
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.username.trim()) newErrors.username = 'This field is required';
+    if (!formData.role.trim()) newErrors.role = 'This field is required';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    setError('');
-    setSuccess('');
+    setIsSubmitted(true); // Set form submission state
+
+    if (!validateForm()) {
+      return;
+    }
 
     const payload = {
       username: formData.username,
@@ -69,17 +86,29 @@ const UpdateUserForm = ({ onUpdateSuccess }) => {
     };
 
     try {
+      setSubmitting(true);
+
       await axios.put(`http://localhost:8080/api/users/${userId}`, payload, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
 
-      setSuccess('User updated successfully!');
+      toast.success('User updated successfully!', {
+        autoClose: 2000, // Show for 2 seconds
+      });
+
       if (onUpdateSuccess) onUpdateSuccess();
+
+      // ✅ Redirect to dashboard after successful update
+      navigate('/dashboard'); // <-- Redirect to dashboard page
     } catch (err) {
       console.error('Update failed:', err);
-      setError('failed to update use.');
+      toast.error('Failed to update user.', {
+        autoClose: 2000, // Show for 2 seconds
+      });
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -87,6 +116,8 @@ const UpdateUserForm = ({ onUpdateSuccess }) => {
 
   return (
     <div>
+      <ToastContainer /> {/* Toast Notification Component */}
+
       <main className="main-content">
         <div className="add-user-container">
           <h2>Update User</h2>
@@ -99,8 +130,8 @@ const UpdateUserForm = ({ onUpdateSuccess }) => {
                   name="username"
                   value={formData.username}
                   onChange={handleChange}
-                  required
                 />
+                {isSubmitted && errors.username && <span className="error-text">{errors.username}</span>}
               </div>
             </div>
 
@@ -110,13 +141,13 @@ const UpdateUserForm = ({ onUpdateSuccess }) => {
                 name="role"
                 value={formData.role}
                 onChange={handleChange}
-                required
               >
                 <option value="">Select Role</option>
                 <option value="ADMIN">Admin</option>
                 <option value="CUSTOMER">Customer</option>
                 <option value="READ_ONLY">Read Only</option>
               </select>
+              {isSubmitted && errors.role && <span className="error-text">{errors.role}</span>}
             </div>
 
             {formData.role === 'CUSTOMER' && (
@@ -127,12 +158,11 @@ const UpdateUserForm = ({ onUpdateSuccess }) => {
             )}
 
             <div className="form-actions">
-              <button type="submit">Update User</button>
+              <CustomButton type="submit" disabled={submitting}>
+                {submitting ? 'Updating...' : 'Update User'}
+              </CustomButton>
             </div>
           </form>
-
-          {error && <p style={{ color: 'red' }}>{error}</p>}
-          {success && <p style={{ color: 'green' }}>{success}</p>}
         </div>
       </main>
     </div>

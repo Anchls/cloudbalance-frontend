@@ -1,29 +1,38 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import '../../styles/Dashboard.css';
-import update from '../../assets/update.png';
+import axios from 'axios';
+import EditIcon from '@mui/icons-material/Edit';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import CustomButton from '../../Components/common/CustomButton';
+import '../../styles/UserManagement.css';
 
-const UserManagement = ({ role }) => {
+const UserManagement = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [error, setError] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 10;
-  const state = useSelector(state => state);
-  // console.log(state);
+  const [filters, setFilters] = useState({
+    username: '',
+    email: '',
+    role: '',
+    lastLogin: ''
+  });
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [activeFilterColumn, setActiveFilterColumn] = useState(null);
+  const usersPerPage = 7;
+  const state = useSelector((state) => state);
+
   useEffect(() => {
     fetchUsers();
   }, []);
 
   const fetchUsers = async () => {
     try {
-      // const token = localStorage.getItem('token');
       const response = await axios.get('http://localhost:8080/api/users/all', {
         headers: {
           Authorization: `Bearer ${state?.token}`,
-          "Content-Type":"Applications/json"
+          "Content-Type": "application/json",
         },
       });
       setUsers(response.data.content);
@@ -33,104 +42,130 @@ const UserManagement = ({ role }) => {
     }
   };
 
-  // Pagination logic
-  const indexOfLastUser = currentPage * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
-  const totalPages = Math.ceil(users.length / usersPerPage);
-
-  const goToNextPage = () => {
-    if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
+  const handleFilterChange = (e, column) => {
+    setFilters({
+      ...filters,
+      [column]: e.target.value,
+    });
   };
 
-  const goToPrevPage = () => {
-    if (currentPage > 1) setCurrentPage((prev) => prev - 1);
+  const roleMap = {
+    ADMIN: 'Admin',
+    CUSTOMER: 'Customer',
+    READ_ONLY: 'Read Only',
+  };
+
+  const formatRole = (role) => roleMap[role] || role;
+
+  const filteredUsers = users.filter((user) =>
+    user.username.toLowerCase().includes(filters.username.toLowerCase()) &&
+    user.email.toLowerCase().includes(filters.email.toLowerCase()) &&
+    formatRole(user.role).toLowerCase().includes(filters.role.toLowerCase()) &&
+    (filters.lastLogin === '' ||
+      (user.lastLogin && new Date(user.lastLogin).toLocaleString().toLowerCase().includes(filters.lastLogin.toLowerCase())))
+  );
+
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+  const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+
+  const handlePageChange = (_, value) => setCurrentPage(value);
+
+  const handleFilterClick = (event, column) => {
+    setAnchorEl(event.currentTarget);
+    setActiveFilterColumn(column);
+  };
+
+  const handleFilterClose = () => {
+    setAnchorEl(null);
   };
 
   return (
-    <div>
-  
-  <h1>Users</h1>
-      <main className="mainn-content">
-        
-        <div className="user-header">
-          <button className="add-user" onClick={() => navigate('/dashboard/add-user')}>
-            + Add User
-          </button>
-        </div>
+    <div className="user-management-container">
+      <h1 className="user-management-title">User</h1>
 
-        {error && <p className="error-text">{error}</p>}
+      <div className="actions-container">
+        <CustomButton onClick={() => navigate('/dashboard/add-user')} variant="contained">
+          + Add User
+        </CustomButton>
+      </div>
 
-        <div className="user-table">
-          <table>
-            <thead>
-              <tr>
-                <th>UserName</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Last Login</th>
-                <th>Account Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentUsers.length > 0 ? (
-                currentUsers.map((user, index) => (
-                  <tr key={index}>
-                    <td>{user.username}</td>
-                    <td>{user.email}</td>
-                    <td>{user.role}</td>
-                    <td>
-                      {user.lastLogin
-                        ? new Date(user.lastLogin).toLocaleString()
-                        : 'N/A'}
-                    </td>
-                    <td>
-                      <button
-                        className="update-button"
-                        onClick={() => navigate(`/dashboard/update-user/${user.id}`)}
-                      >
-                        <img src= {update} alt='update'/>
-                    
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="5" style={{ textAlign: 'center' }}>
-                    No users found.
+      {error && <p className="error-message">{error}</p>}
+
+      <div className="user-management-box">
+        <table className="user-table">
+          <thead>
+            <tr>
+              {['username', 'email', 'role', 'lastLogin'].map((col) => (
+                <th key={col}>
+                  {col.charAt(0).toUpperCase() + col.slice(1)}
+                  <button className="filter-button" onClick={(e) => handleFilterClick(e, col)}>
+                    <FilterListIcon />
+                  </button>
+                </th>
+              ))}
+              <th>Update</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {currentUsers.length > 0 ? (
+              currentUsers.map((user, index) => (
+                <tr key={user.id} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
+                  <td>{user.username}</td>
+                  <td>{user.email}</td>
+                  <td>{formatRole(user.role)}</td>
+                  <td>{user.lastLogin ? new Date(user.lastLogin).toLocaleString() : 'N/A'}</td>
+                  <td>
+                    <button
+                      className="edit-button"
+                      onClick={() => navigate(`/dashboard/update-user/${user.id}`)}
+                    >
+                      <EditIcon />
+                    </button>
                   </td>
                 </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={5} className="no-users">
+                  No users found.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
 
-        {/* Pagination Controls */}
-        <div className="pagination-controls">
-          <button
-            className="pagination-button"
-            onClick={goToPrevPage}
-            disabled={currentPage === 1}
-          >
-            Previous
-          </button>
-          <span className="pagination-info">
-            Page {currentPage} of {totalPages}
-          </span>
-          <button
-            className="pagination-button"
-            onClick={goToNextPage}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </button>
-        </div>
+      <div className="pagination-container">
+        <button
+          className="pagination-button"
+          onClick={() => handlePageChange(null, currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        <span>{currentPage}</span>
+        <button
+          className="pagination-button"
+          onClick={() => handlePageChange(null, currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+      </div>
 
-        {/* <footer className="footer">
-          © 2025 CloudBalance | All rights reserved.
-        </footer> */}
-      </main>
+      {anchorEl && (
+        <div className="filter-menu">
+          <input
+            type="text"
+            value={filters[activeFilterColumn] || ''}
+            onChange={(e) => handleFilterChange(e, activeFilterColumn)}
+            placeholder={`Filter by ${activeFilterColumn}`}
+          />
+        </div>
+      )}
     </div>
   );
 };

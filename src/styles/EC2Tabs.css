@@ -1,34 +1,100 @@
+/* General Container Styling */
+.table-container,
 .ec2-table-container {
-  /* margin: 20px; */
   font-family: Arial, sans-serif;
+  margin-top: 20px;
 }
 
-.ec2-table {
+.table-wrapper {
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+/* Table Styling */
+.filterable-table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.ec2-table thead {
-  background-color: #003366;
-  color: white;
+.filterable-table thead {
+  background-color: #3161b1;  
+  font-weight: bold;
+  color: rgb(255, 255, 255);
 }
 
-.ec2-table th,
-.ec2-table td {
+.filterable-table th,
+.filterable-table td {
   border: 1px solid #ffffff;
-  padding: 8px;
+  padding: 20px;
   text-align: left;
 }
 
-.ec2-table th input {
+/* Header Input Filters (if added in future) */
+.filterable-table th input {
   width: 100%;
-  padding: 4px;
-  border: none;
-  outline: none;
-  background-color: #003366;
-  color: white;
+    padding: 4px;
+    border: none;
+    outline: none;
+    /* background-color: #4e3a3a; */
+    color: rgb(0 0 0);
 }
 
-.ec2-table tbody tr:hover {
+/* Row Hover */
+.filterable-table tbody tr:hover {
   background-color: #f2f2f2;
+}
+
+/* Column Specific Styles */
+.col-resource-id {
+  width: 150px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #0073e6;
+}
+
+.col-resource-name {
+  width: 200px;
+}
+
+.col-region {
+  color: #0073e6;
+}
+
+.col-status {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+/* Dropdown Styling */
+.dropdown-wrapper {
+  margin-bottom: 30px;
+}
+
+.dropdown-wrapper select {
+  padding: 5px 30px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  margin: auto;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #0073e6;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

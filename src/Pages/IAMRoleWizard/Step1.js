@@ -1,18 +1,36 @@
-// src/pages/IAMRoleWizard/Step1.js
+import { useState } from "react";
 import { IAM_POLICY, iamRoleSteps } from "./config/iamRoleSteps";
-import PolicyBlock from "../../Components/PolicyBlock";
-import CopyBox from "../../Components/CopyBox";
+import PolicyBlock from "../../Components/StructureComponent/PolicyBlock";
+import CopyBox from "../../Components/StructureComponent/CopyBox";
 import one from "../../assets/1.png";
-import "../../styles/CreateIAMRolePage.css";
+
 
 const Step1 = ({ data, onChange, onNext }) => {
-  const isFormValid =
-    data.arn.trim() !== "" &&
-    data.accountId.trim() !== "" &&
-    data.accountName.trim() !== "";
+  const [errors, setErrors] = useState({});
+
+  const validate = () => {
+    let tempErrors = {};
+
+    if (!data.arn.trim()) tempErrors.arn = "Please fill this field";
+    if (!data.accountId.trim()) {
+      tempErrors.accountId = "Please fill this field";
+    } else if (!/^\d{12}$/.test(data.accountId)) {
+      tempErrors.accountId = "Account ID must be exactly 12 digits";
+    }
+    if (!data.accountName.trim()) tempErrors.accountName = "Please fill this field";
+
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0; // Return true if no errors
+  };
+
+  const handleNext = () => {
+    if (validate()) {
+      onNext();
+    }
+  };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-100">
+    <div className=" bg-gray-100">
       <h1>Create an IAM Role</h1>
       <p>Create an IAM Role by following these steps</p>
 
@@ -23,7 +41,7 @@ const Step1 = ({ data, onChange, onNext }) => {
               <li className="body_text" key={step.number}>
                 <div>{step.text}</div>
 
-                {step.showTextarea && <PolicyBlock policy={IAM_POLICY}/>}
+                {step.showTextarea && <PolicyBlock policy={IAM_POLICY} />}
                 {step.showInput && (
                   <div className="copyfield_wrapper">
                     <CopyBox />
@@ -52,7 +70,9 @@ const Step1 = ({ data, onChange, onNext }) => {
                       onChange={onChange}
                       required
                     />
+                    {errors.arn && <p className="error-text">{errors.arn}</p>}
                   </div>
+
                   <div className="Account">
                     <label htmlFor="accountId">Enter the Account ID*</label>
                     <input
@@ -64,7 +84,9 @@ const Step1 = ({ data, onChange, onNext }) => {
                       onChange={onChange}
                       required
                     />
+                    {errors.accountId && <p className="error-text">{errors.accountId}</p>}
                   </div>
+
                   <div className="name">
                     <label htmlFor="name">Enter the Name*</label>
                     <input
@@ -76,6 +98,7 @@ const Step1 = ({ data, onChange, onNext }) => {
                       onChange={onChange}
                       required
                     />
+                    {errors.accountName && <p className="error-text">{errors.accountName}</p>}
                   </div>
                 </div>
               </form>
@@ -93,8 +116,7 @@ const Step1 = ({ data, onChange, onNext }) => {
               <button
                 className="nextbtn"
                 type="button"
-                onClick={onNext}
-                disabled={!isFormValid}
+                onClick={handleNext}
               >
                 Next - Add Customer Managed Policies
               </button>

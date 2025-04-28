@@ -1,50 +1,40 @@
 header {
-  // height: 60px;
-  // background-color: #ffffff;
-  // color: rgb(0, 0, 0);
-  // font-size: 24px;
-  // font-weight: 600;
-  // flex-shrink: 0;
-  box-shadow: 0px 2px 6px rgba(98, 98, 98, 0.15); // Stronger shadow
+  width: 100%; /* Ensure header takes full width of the screen */
+  box-shadow: 0px 2px 6px rgba(98, 98, 98, 0.15); /* Stronger shadow */
+  position: relative; /* Ensure the shadow is positioned relative to the header */
+}
 
-  .top-navbar {
-    // height: 100%;
-    display: flex;
-    justify-content: space-between;
-    // align-items: center;
-    padding: 0 10px;
+.top-navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.left-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  .logo img {
+    height: 45px;
+    width: auto;
+  }
+}
+
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .welcome-text {
+    /* Optional styles */
   }
 
-  .left-section {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-
-    .logo img {
-      height: 45px;
-      width: auto;
-    }
-
-   
-  }
-
-  .right-section {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    .welcome-text {
-      // font-size: 16px;
-      // font-weight: 500;
-    }
-
-    .profile-icon {
-      background-color: white;
-      color: #0056d2;
-      border-radius: 9999px;
-      padding: 6px 12px;
-      // font-size: 16px;
-      font-weight: bold;
-    }
+  .profile-icon {
+    background-color: white;
+    color: #0056d2;
+    border-radius: 9999px;
+    padding: 6px 12px;
+    font-weight: bold;
   }
 }

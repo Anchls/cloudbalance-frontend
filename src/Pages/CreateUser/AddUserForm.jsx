@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import '../../styles/adduser.css';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import AccountManager from './AccountManager';
+import CustomButton from '../../Components/common/CustomButton';
+import '../../styles/adduser.css';
 
 const AddUserForm = ({ onUserAdded }) => {
   const navigate = useNavigate();
@@ -17,20 +18,42 @@ const AddUserForm = ({ onUserAdded }) => {
   });
 
   const [selectedAccounts, setSelectedAccounts] = useState([]);
-  const [error, setError] = useState('');
+  const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState('');
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+
+    // Remove error of the field when user starts typing
+    if (errors[name]) {
+      setErrors(prevErrors => ({ ...prevErrors, [name]: '' }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.username) newErrors.username = 'This field is required';
+    if (!formData.email) newErrors.email = 'This field is required';
+    if (!formData.password) newErrors.password = 'This field is required';
+    if (!formData.role) newErrors.role = 'This field is required';
+
+    setErrors(newErrors);
+
+    // Agar newErrors empty hai tabhi true
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
     setSuccess('');
 
     if (!token) {
-      setError("No token found. Please log in again.");
+      alert("No token found. Please log in again.");
+      return;
+    }
+
+    if (!validateForm()) {
       return;
     }
 
@@ -54,19 +77,23 @@ const AddUserForm = ({ onUserAdded }) => {
         role: ''
       });
       setSelectedAccounts([]);
+      setErrors({});
+
       if (onUserAdded) onUserAdded();
 
+      // ✅ Redirect to dashboard after success
+      navigate('/dashboard');  // <-- Redirect to dashboard page
     } catch (err) {
       console.error('Error adding user:', err);
-      setError('Failed to add user!');
+      alert('Failed to add user!');
     }
   };
 
   return (
     <div>
+      <h2>Add New User</h2>
       <main className="main-content">
         <div className="add-user-container">
-          <h2>Add New User</h2>
           <form onSubmit={handleSubmit} className="add-user-form">
             <div className="form-row">
               <div className="form-group">
@@ -76,9 +103,9 @@ const AddUserForm = ({ onUserAdded }) => {
                   name="username"
                   value={formData.username}
                   onChange={handleChange}
-                  required
                   placeholder="Enter user Name"
                 />
+                {errors.username && <p className="error">{errors.username}</p>}
               </div>
             </div>
 
@@ -90,19 +117,20 @@ const AddUserForm = ({ onUserAdded }) => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  required
                   placeholder="Enter Email ID"
                 />
+                {errors.email && <p className="error">{errors.email}</p>}
               </div>
 
               <div className="form-group">
                 <label>Select Roles *</label>
-                <select name="role" value={formData.role} onChange={handleChange} required>
+                <select name="role" value={formData.role} onChange={handleChange}>
                   <option value="">Select Role</option>
                   <option value="ADMIN">Admin</option>
                   <option value="CUSTOMER">Customer</option>
                   <option value="READ_ONLY">Read Only</option>
                 </select>
+                {errors.role && <p className="error">{errors.role}</p>}
               </div>
             </div>
 
@@ -113,12 +141,11 @@ const AddUserForm = ({ onUserAdded }) => {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                required
                 placeholder="Enter Password"
               />
+              {errors.password && <p className="error">{errors.password}</p>}
             </div>
 
-            {/* Show Orphan Account Selector Only if Role is Customer */}
             {formData.role === "CUSTOMER" && (
               <AccountManager
                 selectedAccounts={selectedAccounts}
@@ -127,12 +154,11 @@ const AddUserForm = ({ onUserAdded }) => {
             )}
 
             <div className="form-actions">
-              <button type="submit">Save User</button>
+              <CustomButton type="submit">Save User</CustomButton>
             </div>
-          </form>
 
-          {error && <p style={{ color: 'red' }}>{error}</p>}
-          {success && <p style={{ color: 'green' }}>{success}</p>}
+            {success && <p style={{ color: 'green', marginTop: '10px' }}>{success}</p>}
+          </form>
         </div>
       </main>
     </div>

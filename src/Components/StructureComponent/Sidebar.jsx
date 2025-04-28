@@ -2,11 +2,11 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 // Sample icons (you can replace these with actual icons)
-import onboardIcon from '../assets/onboarding.png';
-import costIcon from '../assets/cost.png';
-import awsIcon from '../assets/aws.png';
-import userIcon from '../assets/user.png'
-import '../styles/Sidebar.scss';
+import onboardIcon from '../../assets/onboarding.png';
+import costIcon from '../../assets/cost.png';
+import awsIcon from '../../assets/aws.png';
+import userIcon from '../../assets/user.png'
+import '../../styles/Sidebar.scss';
 
 const Sidebar = () => {
   const { role } = useSelector(state => state);

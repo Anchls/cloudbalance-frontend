@@ -6,7 +6,7 @@
   cursor: pointer;
   width: fit-content;
   transition: all 0.2s ease;
-  margin-left: 40px; 
+  /* margin-left: 40px;  */
 }
 
 .copy-box-container:hover {

@@ -2,12 +2,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
-import { login } from "../services/authService";
-import logo from '../assets/imh.png'; // Adjust the path to your logo
-import { loginSuccess } from "../redux/Action";
+
+import logo from '../../assets/imh.png'; 
+import { loginSuccess } from "../../redux/Action";
 import { useDispatch } from "react-redux";
+// import {login} from "../../api/api"
+// import login
+import {login} from "../../services/authService";
+
 // import 'react-toastify/dist/ReactToastify.css';
-import '../Pages/Login.css';
+import '../../styles/Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -83,7 +87,7 @@ const Login = () => {
           Have Questions ?<a href="/privacy-policy">Talk to our team</a>{" "}
         </span>
 
-        <span>CloudKeeper 2023| All Rights Resurved</span>
+        <span className="footerLeft">CloudKeeper 2023| All Rights Resurved</span>
       </div>
     </>
   );

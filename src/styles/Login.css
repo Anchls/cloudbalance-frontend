@@ -1,9 +1,10 @@
+
 .login-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 96vh;
+    height: 95vh;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     background-color: #ffffff;
   }
@@ -103,7 +104,9 @@
   
   .login-footer {
     width: 100%;
+    /* margin:2px; */
     padding: 15px 0;
+    /* margin-left: 100px; */
     background-color: #f9f9f9;
     border-top: 1px solid #ddd;
     display: flex;
@@ -114,6 +117,8 @@
   }
   
   .login-footer a {
+        /* margin-left: 100px; */
+
     color: #007bff;
     text-decoration: none;
     font-weight: 100;
@@ -122,4 +127,11 @@
   .login-footer a:hover {
     text-decoration: underline;
   }
+
+  .footerRight{
+    margin-left: 20px;
+  }
   
+  .footerLeft{
+    margin-right: 20px;
+  }

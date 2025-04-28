@@ -1,0 +1,36 @@
+/* styles/button.css */
+
+.custom-button {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .custom-button {
+    background-color: rgb(49, 97, 177);
+    color: white;
+  }
+  
+  .custom-button:hover {
+    background-color: rgb(49, 97, 177);
+  }
+  
+  .custom-button.logout {
+    background-color: lightgray;
+    color: black;
+  }
+  
+  .custom-button.logout:hover {
+    background-color: #d3d3d3;
+  }
+  
+  .custom-button svg {
+    color: inherit;
+  }
+  

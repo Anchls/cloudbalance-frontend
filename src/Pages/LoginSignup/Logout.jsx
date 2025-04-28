@@ -1,7 +1,8 @@
 // src/Pages/Logout.jsx
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import useHandleLogout from "../Utils/logout";
+import useHandleLogout from "../LoginSignup/Logout.jsx";
+
 
 const Logout = () => {
   const logout = useHandleLogout();

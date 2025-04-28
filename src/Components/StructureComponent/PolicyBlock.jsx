@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
-import '../styles/PolicyBlock.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../../styles/PolicyBlock.css';
 
 const PolicyBlock = ({ stepNumber, instruction, policy }) => {
   const textareaRef = useRef();

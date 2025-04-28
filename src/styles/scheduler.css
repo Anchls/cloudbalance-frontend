@@ -1,46 +1,57 @@
-/* General Scheduler container */
+/* Scheduler main container */
 .scheduler-main {
-  padding: 20px;
-  font-family: 'Arial', sans-serif;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9fafb;
 }
 
-/* Tabs container with gap */
+.top-controls {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap:
+1rem;
+margin-top: 20px;
+  justify-content: space-between;
+}
+
+/* Tabs container (now left-aligned inside .top-controls) */
 .tabs-container {
   display: flex;
-  gap: 16px;
-  margin-bottom: 20px;
-  justify-content: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 /* Tab button styling */
 .tab-button {
-  padding: 10px 20px;
-  border-radius: 8px;
-  background-color: #f4f6fa; /* Light background color */
-  border: 1px solid #d1d5db; /* Lighter border */
-  cursor: pointer;
+  padding: 10px 24px;
+  font-size: 16px;
   font-weight: 600;
-  transition: all 0.3s ease;
-  min-width: 100px; /* Ensuring consistent width */
-  text-align: center;
-  border: none;
+  color: #1a202c;
+  background-color: #e2e8f0;
+  border: 2px solid transparent;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
 }
 
-/* Button hover effect */
+/* Hover effect */
 .tab-button:hover {
-  background-color: #e2e8f0; /* Light grey on hover */
-  border-color: #a0aec0; /* Darker border on hover */
+  background-color: #cbd5e1;
+  color: #1a202c;
+  transform: translateY(-1px);
 }
 
-/* Active tab styling */
+/* Active tab */
 .tab-button.active {
-    background-color: #003366;
-    color: white;
-  border-color: #3182ce; /* Blue border */
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  background-color: #093CA2;
+  color: white;
+  border-color: #093CA2;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Optional: Darker blue on hover for active tab */
 .tab-button.active:hover {
-  background-color: #2b6cb0; /* Darker blue on hover for active tab */
+  background-color: #052e85;
 }
