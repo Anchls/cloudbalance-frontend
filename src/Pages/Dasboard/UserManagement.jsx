@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import EditIcon from '@mui/icons-material/Edit';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import CustomButton from '../../Components/common/CustomButton';
+import CustomButton from '../../Components/common/Button/CustomButton';
 import '../../styles/UserManagement.css';
 
 const UserManagement = () => {

@@ -1,5 +1,5 @@
 import React from "react";
-import SchedulerPage from "../AwsComponents/SchedulerPage";
+import SchedulerPage from "./Index";
 
 const AwsService = () => {
   return <SchedulerPage />;

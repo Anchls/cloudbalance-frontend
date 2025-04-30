@@ -1,0 +1,94 @@
+/* src/styles/CostExplorer.css */
+
+.group-by-container {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    background-color: #fff;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  .filter-heading.active {
+    background-color: #f0f0f0; /* Highlight active filter heading */
+    font-weight: bold;
+  }
+  
+  .group-by-title {
+    font-weight: bold;
+    margin-right: 8px;
+    font-size: 14px;
+  }
+  
+  .group-by-scroll {
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    gap: 8px;
+  }
+  
+  .group-by-button {
+    padding: 6px 12px;
+    background-color: #f5f7fa;
+    border: 1px solid #d0d5dd;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #344054;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .group-by-button:hover {
+    background-color: #e2e8f0;
+  }
+  
+  .group-by-button.selected {
+    background-color: #0052cc;
+    color: #ffffff;
+    border-color: #0052cc;
+  }
+  
+  .group-by-dropdown-wrapper {
+    position: relative;
+  }
+  
+  .group-by-dropdown-button {
+    padding: 6px 12px;
+    background-color: #f5f7fa;
+    border: 1px solid #d0d5dd;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #344054;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  
+  .group-by-dropdown-button:hover {
+    background-color: #e2e8f0;
+  }
+  
+  .more-dropdown-menu {
+    position: absolute;
+    top: 110%;
+    right: 0;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    min-width: 150px;
+    z-index: 10;
+  }
+  
+  .more-dropdown-item {
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #344054;
+    cursor: pointer;
+  }
+  
+  .more-dropdown-item:hover {
+    background-color: #f0f4f8;
+  }
+  

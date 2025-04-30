@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify"; // <<=== Added for toast
-import CopyBox from "../../Components/StructureComponent/CopyBox";
+import CopyBox from "../../Components/common/CopyBox/CopyBox";
 import five from '../../assets/5.png';
 import four from '../../assets/6.png';
 import six from '../../assets/7.png';

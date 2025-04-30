@@ -2,11 +2,12 @@
 
 import React, { useEffect } from "react";
 import { JSON, JSON2, JSON3, JSON4, JSON5 } from "../../Pages/IAMRoleWizard/config/iamRoleSteps";
-import PolicyBlock from "../../Components/StructureComponent/PolicyBlock";
+import PolicyBlock from "../../Components/common/CopyBox/PolicyBlock";
 import one from "../../assets/1.png";
 import two from "../../assets/2.png";
 import three from "../../assets/3.png";
-import CopyBox from "../../Components/StructureComponent/CopyBox";
+import CopyBox from "../../Components/common/CopyBox/CopyBox";
+import CustomButton from "../../Components/common/Button/CustomButton";
 
 
 const Step2 = ({ onBack, onNext }) => {
@@ -128,9 +129,9 @@ const Step2 = ({ onBack, onNext }) => {
               Back
             </button>
             <div className="rightbutton">
-              <button className="nextbtn" type="button" onClick={onNext}>
+              <CustomButton className="nextbtn" type="button" onClick={onNext}>
                 Next - Add Inline Policy
-              </button>
+              </CustomButton>
             </div>
           </div>
         </section>

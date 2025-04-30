@@ -1,0 +1,36 @@
+header {
+  width: 100%; 
+  box-shadow: 0px 2px 6px rgba(98, 98, 98, 0.15); 
+  position: relative; 
+}
+
+.top-navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.left-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  .logo img {
+    height: 45px;
+    width: auto;
+  }
+}
+
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .profile-icon {
+    background-color: white;
+    color: #0056d2;
+    border-radius: 9999px;
+    padding: 6px 12px;
+    font-weight: bold;
+  }
+}

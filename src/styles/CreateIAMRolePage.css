@@ -17,9 +17,9 @@ p {
   color: #6b7280;
   margin-bottom: 1.5rem;
 }
-.submitbutton{
+ .submitbutton{
 
-  background-color: #ef4444;
+  background-color: #ef4444; 
   margin:25px;
   color: white;
   border: none;
@@ -29,9 +29,8 @@ p {
   font-weight: 600;
   transition: background 0.3s;
 gap:30px;
-  
 }
-/* === Instructions Section === */
+
 .instructions {
   background: #ffffff;
   border-radius: 0.5rem;
@@ -154,7 +153,7 @@ input[type="text"]:focus {
   flex-wrap: wrap;
 }
 
-.iambutton {
+/* .iambutton {
   background-color: #ef4444;
   margin:25px;
   color: white;
@@ -164,7 +163,7 @@ input[type="text"]:focus {
   cursor: pointer;
   font-weight: 600;
   transition: background 0.3s;
-}
+}  */
 
 .iambutton:hover {
   background-color: #dc2626;
@@ -175,31 +174,7 @@ input[type="text"]:focus {
   gap: 1rem;
 }
 
-.backbutton,
-.nextbtn {
-  background-color: #2563eb;
-  color: white;
-  border: none;
-  margin: 25px;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.375rem;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background 0.3s;
-}
 
-.backbutton:disabled,
-.nextbtn:disabled {
-  background-color: #93c5fd;
-  cursor: not-allowed;
-}
-
-.backbutton:hover:not(:disabled),
-.nextbtn:hover:not(:disabled) {
-  background-color: #1d4ed8;
-}
-
-/* === Responsive Design === */
 @media (max-width: 768px) {
   .instructions {
     padding: 1.5rem;

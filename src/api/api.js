@@ -1,4 +1,3 @@
-// src/api/api.js
 import axios from 'axios';
 
 const api = axios.create({
@@ -19,7 +18,21 @@ api.interceptors.request.use((config) => {
 
 export default api;
 
-//  Logout user
+
+
+export const updateUser = (userId, userData) => api.put(`/users/${userId}`, userData);
+
+export const getUserById = (userId) => api.get(`/users/${userId}`);
+
+export const getRoles = () => api.get('/roles');
+
+
+export const fetchGroupByOptions = async () => {
+  const response = await api.get('snowflake/group');
+  return response.data;
+};
+
+
 export const logoutUser = async () => {
   try {
     await api.post('/auth/logout');
@@ -27,6 +40,7 @@ export const logoutUser = async () => {
     console.error('Logout failed:', error);
   }
 };
+
 
 export const fetchCloudAccounts = async () => {
   try {
@@ -41,9 +55,7 @@ export const fetchCloudAccounts = async () => {
 
 export const fetchEC2Data = async (roleArn) => {
   try {
-    const response = await api.get('/ec2/instances', {
-      params: { roleArn },
-    });
+    const response = await api.get('/ec2/instances', { params: { roleArn } });
     return response.data;
   } catch (error) {
     console.error('Failed to fetch EC2 data:', error);
@@ -53,9 +65,7 @@ export const fetchEC2Data = async (roleArn) => {
 
 export const fetchRDSData = async (roleArn) => {
   try {
-    const response = await api.get('/rds/instances' ,{
-        params: { roleArn },
-    });
+    const response = await api.get('/rds/instances', { params: { roleArn } });
     return response.data;
   } catch (error) {
     console.error('Failed to fetch RDS data:', error);
@@ -65,9 +75,7 @@ export const fetchRDSData = async (roleArn) => {
 
 export const fetchASGData = async (roleArn) => {
   try {
-    const response = await api.get('/asg/instances',{
-      params: { roleArn },
-  });
+    const response = await api.get('/asg/instances', { params: { roleArn } });
     return response.data;
   } catch (error) {
     console.error('Failed to fetch ASG data:', error);
@@ -76,18 +84,66 @@ export const fetchASGData = async (roleArn) => {
 };
 
 
-const API_BASE = 'http://localhost:8080/api/snowflake'; 
-export const getGroupByColumns = async () => {
-  const response = await axios.get(`${API_BASE}/group`);
-  return response.data.GroupBy;
-};
+const SNOWFLAKE_API_BASE = '/snowflake';
 
 export const getFiltersForGroup = async (accountId, filterRequest) => {
-  const response = await axios.post(`${API_BASE}/${accountId}/filter`, filterRequest);
-  return response.data;
+  try {
+    const response = await api.post(`${SNOWFLAKE_API_BASE}/${accountId}/filter`, filterRequest);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch filters:', error);
+    return [];
+  }
 };
 
 export const getGroupedCosts = async (accountId, costRequest) => {
-  const response = await axios.post(`${API_BASE}/${accountId}`, costRequest);
-  return response.data;
+  try {
+    const response = await api.post(`${SNOWFLAKE_API_BASE}/${accountId}`, costRequest);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch grouped costs:', error);
+    return [];
+  }
 };
+
+
+
+export const fetchGroupByColumns = async () => {
+  try {
+    const response = await fetch('/api/columns');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Failed to fetch group by columns:', error);
+    return [];
+  }
+};
+
+export const fetchDistinctValues = async (accountId) => {
+  try {
+    const response = await fetch(`/api/${accountId}/filter`, { method: 'POST' });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Failed to fetch distinct values:', error);
+    return [];
+  }
+};
+
+export const fetchGroupedCostsFromStatic = async (accountId, request) => {
+  try {
+    const response = await fetch(`/api/${accountId}`, {
+      method: 'POST',
+      body: JSON.stringify(request),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Failed to fetch grouped costs (static):', error);
+    return [];
+  }
+};
+

@@ -1,23 +1,12 @@
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { logoutUser } from '../api/api'; // Import the logoutUser method from api.js
 
-// Custom logout function as a hook
 const useHandleLogout = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      const token = localStorage.getItem('token');
-
-      await axios.post(
-        'http://localhost:8080/api/auth/logout',
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await logoutUser(); 
 
       localStorage.removeItem('token');
       localStorage.removeItem('role');

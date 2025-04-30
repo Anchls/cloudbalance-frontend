@@ -9,11 +9,11 @@ const Logout = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    logout(); // Perform logout logic
+    logout(); 
     navigate("/login");
   }, [logout, navigate]);
 
-  return null; // No UI needed
+  return null; 
 };
 
 export default Logout;

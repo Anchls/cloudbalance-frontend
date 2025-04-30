@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { fetchASGData } from '../../api/api.js';
-import FilterableTable from '../FilterableTableComponent/FilterableTable.js';
-import LoadingSpinner from '../Loading/Loading.js';
+import { fetchASGData} from '../../api/api.js';
+import FilterableTable from '../common/FilterableTableComponent/FilterableTable.js';
+import LoadingSpinner from '../common/Loading/Loading.js';
 import '../../styles/EC2Tabs.css';
 
 const ASGTable = ({ selectedRoleArn }) => {

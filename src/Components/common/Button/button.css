@@ -1,0 +1,57 @@
+/* Base button styling */
+.custom-button {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Normal button styles (enabled state) */
+  .custom-button {
+    background-color: rgb(49, 97, 177);
+    color: white;
+  }
+  
+  .custom-button:hover {
+    background-color: rgb(49, 97, 177);
+  }
+  
+  /* Disabled state styling */
+  .custom-button:disabled {
+    background-color: rgb(179, 179, 179); /* Change background color when disabled */
+    color: #000000; /* Change text color when disabled */
+    cursor: not-allowed;
+    display :flex; /* Change cursor to indicate it's not clickable */
+   flex-direction: column;
+    opacity: 0.6; /* Reduce opacity for disabled buttons */
+  }
+  
+  /* Save User / Next button styles */
+  .custom-button.primary {
+    background-color: rgb(49, 97, 177);
+  }
+  
+  .custom-button.primary:hover {
+    background-color: rgb(49, 97, 177);
+  }
+  
+  /* Cancel button styling */
+  .custom-button.logout {
+    background-color: rgb(199, 199, 199);
+    color: rgb(0, 0, 0);
+  }
+  
+  .custom-button.logout:hover {
+    background-color: darkred;
+  }
+  
+  /* Styling for SVG inside buttons */
+  .custom-button svg {
+    color: inherit;
+  }
+  

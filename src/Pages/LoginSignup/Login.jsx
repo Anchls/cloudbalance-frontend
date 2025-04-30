@@ -1,75 +1,66 @@
-// src/pages/Login.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from 'react-toastify';
-
+import { useDispatch } from "react-redux";
 import logo from '../../assets/imh.png'; 
 import { loginSuccess } from "../../redux/Action";
-import { useDispatch } from "react-redux";
-// import {login} from "../../api/api"
-// import login
-import {login} from "../../services/authService";
-
-// import 'react-toastify/dist/ReactToastify.css';
+import { login } from "../../services/authService";
+import { showToast } from "../../Components/common/Toast/CommonToast";
 import '../../styles/Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
+
     if (!email || !password) {
       setError("Please fill in all fields.");
       return;
     }
+
     try {
       const res = await login({ email, password });
       const { token, role } = res;
 
-      dispatch(loginSuccess({token, role}));
-      toast.success("Login successful!");
-      
+      dispatch(loginSuccess({ token, role }));
+
+      showToast("Success", "Login successful!", "success"); // ✅ Success toast
       navigate("/dashboard");
-  
+
       setTimeout(() => {
         dispatch({ type: "LOGOUT" });
-        toast.info("Session expired!");
+        showToast("Info", "Session expired! Please log in again.", "info"); // ✅ Info toast
         navigate("/login");
       }, 15 * 60 * 1000);
-      
-    } 
-    catch (error) {
-      toast.error("Invalid credentials. Please try again.");
+
+    } catch (error) {
+      showToast("Error", "Invalid credentials. Please try again.", "error"); // ✅ Error toast
     }
   };
-  
+
   return (
     <>
       <div className="login-container">
-        <img
-          src={logo}
-          alt="CloudKeeper Logo"
-          className="logo"
-        />
+        <img src={logo} alt="CloudKeeper Logo" className="logo" />
         <form onSubmit={handleLogin}>
           <label htmlFor="username">Email</label>
           <input
-          id="username"
+            id="username"
             type="text"
-            placeholder="Username "
+            placeholder="Username"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <label htmlFor="Password">Password</label>
 
+          <label htmlFor="Password">Password</label>
           <input
-          id= "Password"
+            id="Password"
             type="password"
             placeholder="Password"
             value={password}
@@ -82,12 +73,14 @@ const Login = () => {
           <button type="submit">Login</button>
         </form>
       </div>
+
       <div className="login-footer">
         <span className="footerRight">
-          Have Questions ?<a href="/privacy-policy">Talk to our team</a>{" "}
+          Have Questions? <a href="/privacy-policy">Talk to our team</a>
         </span>
-
-        <span className="footerLeft">CloudKeeper 2023| All Rights Resurved</span>
+        <span className="footerLeft">
+          CloudKeeper 2023 | All Rights Reserved
+        </span>
       </div>
     </>
   );
